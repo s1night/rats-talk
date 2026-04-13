@@ -160,6 +160,8 @@
   line-height: 48rpx;
   margin-bottom: 20rpx;
   white-space: pre-wrap;
+  word-break: break-all;
+  overflow-wrap: anywhere;
 }
 
 .image-swiper {
