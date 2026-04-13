@@ -16,6 +16,7 @@ Page({
   },
 
   onLoad: function () {
+    this._skipNextOnShowRefresh = true;
     this.getPosts();
   },
 
@@ -24,7 +25,11 @@ Page({
     if (tabBar) {
       tabBar.setData({ selected: 0 });
     }
-    // 页面显示时重新获取帖子列表，确保数据最新
+    if (this._skipNextOnShowRefresh) {
+      this._skipNextOnShowRefresh = false;
+      return;
+    }
+    // 页面再次显示时重新获取帖子列表，确保数据最新
     this.getPosts(this.data.searchValue);
   },
 

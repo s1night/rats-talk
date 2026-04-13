@@ -101,7 +101,7 @@ exports.main = async (event, context) => {
         clubName: clubName,
         content: content,
         imgs: imgs,
-        status: 0,
+        status: 1,
         viewCount: 0,
         usefulCount: 0,
         uselessCount: 0,
@@ -112,7 +112,7 @@ exports.main = async (event, context) => {
 
     return {
       success: true,
-      message: '帖子发布成功，等待审核',
+      message: '帖子发布成功',
       postId: result._id
     };
   } catch (err) {

@@ -226,6 +226,29 @@ swiper-item {
   font-size: 26rpx;
 }
 
+.interaction {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.interaction-item {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.interaction-icon {
+  width: 24rpx;
+  height: 24rpx;
+  vertical-align: middle;
+}
+
+.interaction-count {
+  font-size: 24rpx;
+  color: #999999;
+}
+
 .view-icon {
   width: 24rpx;
   height: 24rpx;

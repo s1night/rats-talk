@@ -11,33 +11,108 @@ App({
       });
     }
 
-    // 全局数据
-    this.globalData = {
-      userInfo: null
-    };
-
-    // 从本地存储获取用户信息
-    this.getUserInfoFromStorage();
+    this.loadAuthStateFromStorage();
+    this.tryRestoreLoginSession();
   },
 
-  getUserInfoFromStorage: function() {
-    const userInfo = wx.getStorageSync('userInfo');
-    if (userInfo) {
-      this.globalData.userInfo = userInfo;
+  loadAuthStateFromStorage: function () {
+    const userProfile = wx.getStorageSync('userProfile');
+    const loginStatus = !!wx.getStorageSync('loginStatus');
+    this.globalData.userProfile = userProfile || null;
+    this.globalData.isLoggedIn = loginStatus && !!userProfile;
+    this.globalData.userInfo = userProfile ? {
+      nickName: userProfile.nickName,
+      avatarUrl: userProfile.avatarUrl
+    } : null;
+  },
+
+  tryRestoreLoginSession: function () {
+    if (!this.globalData.isLoggedIn || !this.globalData.userProfile) {
+      return;
+    }
+    this.getOpenid((openid) => {
+      if (!openid) {
+        this.clearLoginStatus();
+        return;
+      }
+      this.globalData.userInfo = {
+        ...this.globalData.userProfile,
+        openid
+      };
+    });
+  },
+
+  saveUserProfileToStorage: function (profile) {
+    this.globalData.userProfile = {
+      nickName: profile.nickName,
+      avatarUrl: profile.avatarUrl
+    };
+    wx.setStorageSync('userProfile', this.globalData.userProfile);
+  },
+
+  setLoginStatus: function (status) {
+    this.globalData.isLoggedIn = !!status;
+    if (status) {
+      wx.setStorageSync('loginStatus', true);
+    } else {
+      wx.removeStorageSync('loginStatus');
     }
   },
 
-  saveUserInfoToStorage: function(userInfo) {
-    this.globalData.userInfo = userInfo;
-    wx.setStorageSync('userInfo', userInfo);
+  completeLogin: function ({ openid, nickName, avatarUrl }) {
+    this.saveUserProfileToStorage({ nickName, avatarUrl });
+    this.setLoginStatus(true);
+    this.globalData.userInfo = { openid, nickName, avatarUrl };
   },
 
-  clearUserInfo: function() {
+  clearLoginStatus: function () {
+    this.setLoginStatus(false);
     this.globalData.userInfo = null;
-    wx.removeStorageSync('userInfo');
   },
 
-  getOpenid: function(callback) {
+  hasCachedUserProfile: function () {
+    const profile = this.globalData.userProfile;
+    return !!(profile && profile.nickName && profile.avatarUrl);
+  },
+
+  loginWithCachedProfile: function (callback) {
+    const profile = this.globalData.userProfile;
+    if (!this.hasCachedUserProfile()) {
+      if (callback) callback(false);
+      return;
+    }
+    this.getOpenid((openid) => {
+      if (!openid) {
+        if (callback) callback(false);
+        return;
+      }
+      wx.cloud.callFunction({
+        name: 'createUser',
+        data: {
+          openid,
+          nickName: profile.nickName,
+          avatarUrl: profile.avatarUrl
+        },
+        success: (res) => {
+          if (res.result && res.result.success) {
+            this.completeLogin({
+              openid,
+              nickName: profile.nickName,
+              avatarUrl: profile.avatarUrl
+            });
+            if (callback) callback(true);
+          } else if (callback) {
+            callback(false);
+          }
+        },
+        fail: () => {
+          if (callback) callback(false);
+        }
+      });
+    });
+  },
+
+  getOpenid: function (callback) {
     wx.cloud.callFunction({
       name: 'getOpenid',
       success: res => {
@@ -56,6 +131,8 @@ App({
   },
 
   globalData: {
-    userInfo: null
+    userInfo: null,
+    userProfile: null,
+    isLoggedIn: false
   }
 });

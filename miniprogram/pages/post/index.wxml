@@ -41,13 +41,22 @@
     <!-- 底部信息 -->
     <view class="post-footer">
       <text class="create-time">{{post.createTime}}</text>
-      <!-- 暂时注释掉浏览量的展示，以后可能还要用 -->
-      <!--
-      <view class="view-wrapper">
-        <image class="view-icon" src="/images/icons/eye.png"></image>
-        <text class="view-count">{{formattedViewCount}}</text>
+      <view class="interaction">
+        <view class="interaction-item" catchtap="onUsefulTap">
+          <image
+            class="interaction-icon"
+            src="{{post.userInteractionType === 'useful' ? '/images/icons/useful_active.png' : '/images/icons/useful.png'}}"
+          ></image>
+          <text class="interaction-count">{{post.usefulCount || 0}}</text>
+        </view>
+        <view class="interaction-item" catchtap="onUselessTap">
+          <image
+            class="interaction-icon"
+            src="{{post.userInteractionType === 'useless' ? '/images/icons/useless_active.png' : '/images/icons/useless.png'}}"
+          ></image>
+          <text class="interaction-count">{{post.uselessCount || 0}}</text>
+        </view>
       </view>
-      -->
     </view>
 
     <!-- 审核不通过原因 -->

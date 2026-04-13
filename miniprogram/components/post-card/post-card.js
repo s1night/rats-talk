@@ -68,9 +68,7 @@ Component({
       const post = this.data.post || {};
       const postId = post._id;
       const app = getApp();
-      const userInfo = app.globalData.userInfo || {};
-
-      if (!userInfo.openid) {
+      if (!app.globalData.isLoggedIn) {
         wx.showToast({ title: '需要登录才能互动', icon: 'none' });
         setTimeout(() => {
           wx.switchTab({ url: '/pages/profile/index' });

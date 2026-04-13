@@ -7,6 +7,7 @@ Page({
     post: {},
     showMoreMenu: false,
     loading: true,
+    isInteracting: false,
     isOwner: false,
     currentSwiperIndex: 0,
     source: '',
@@ -111,6 +112,83 @@ Page({
     this.setData({
       currentSwiperIndex: e.detail.current
     });
+  },
+
+  onUsefulTap: function () {
+    this.interact('useful');
+  },
+
+  onUselessTap: function () {
+    this.interact('useless');
+  },
+
+  interact: function (type) {
+    if (this.data.isInteracting) {
+      return;
+    }
+
+    const post = this.data.post || {};
+    const postId = post._id;
+    const app = getApp();
+    if (!app.globalData.isLoggedIn) {
+      wx.showToast({ title: '需要登录才能互动', icon: 'none' });
+      setTimeout(() => {
+        wx.switchTab({ url: '/pages/profile/index' });
+      }, 800);
+      return;
+    }
+
+    if (!postId) {
+      return;
+    }
+
+    const rollbackPost = { ...post };
+    const nextPost = this.getNextPostState(post, type);
+    this.setData({
+      post: nextPost,
+      isInteracting: true
+    });
+
+    wx.cloud.callFunction({
+      name: 'interactPost',
+      data: {
+        postId,
+        type
+      },
+      success: (res) => {
+        this.setData({ isInteracting: false });
+        if (!res.result || !res.result.success) {
+          this.setData({ post: rollbackPost });
+          wx.showToast({ title: (res.result && res.result.message) || '互动失败', icon: 'none' });
+        }
+      },
+      fail: () => {
+        this.setData({
+          post: rollbackPost,
+          isInteracting: false
+        });
+        wx.showToast({ title: '互动失败，请稍后重试', icon: 'none' });
+      }
+    });
+  },
+
+  getNextPostState: function (post, type) {
+    const nextPost = { ...post };
+    const previousType = nextPost.userInteractionType || '';
+
+    if (previousType === type) {
+      nextPost.userInteractionType = '';
+      nextPost[`${type}Count`] = Math.max(0, Number(nextPost[`${type}Count`] || 0) - 1);
+      return nextPost;
+    }
+
+    if (previousType && previousType !== type) {
+      nextPost[`${previousType}Count`] = Math.max(0, Number(nextPost[`${previousType}Count`] || 0) - 1);
+    }
+
+    nextPost.userInteractionType = type;
+    nextPost[`${type}Count`] = Number(nextPost[`${type}Count`] || 0) + 1;
+    return nextPost;
   },
 
   // 显示更多菜单

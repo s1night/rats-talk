@@ -1,0 +1,32 @@
+<view class="container">
+  <view class="post-list">
+    <block wx:for="{{posts}}" wx:key="_id">
+      <post-card
+        post="{{item}}"
+        showAvatar="{{true}}"
+        showIdentity="{{true}}"
+        showStatus="{{true}}"
+        showViewCount="{{true}}"
+        contentPrefix=""
+        catch:tap="goToPostDetail"
+      />
+    </block>
+  </view>
+
+  <view class="loading-more" wx:if="{{loadingMore}}">
+    <text>加载中...</text>
+  </view>
+
+  <view class="no-more" wx:if="{{!hasMore && posts.length > 0 && !loading && !loadingMore}}">
+    <text>没有更多了</text>
+  </view>
+
+  <view class="empty-state" wx:if="{{posts.length === 0 && !loading && initialLoad}}">
+    <text class="empty-text">还没有发布过帖子，点击发布按钮，分享你的经历～</text>
+    <button class="publish-btn" bindtap="goToPublish">发布帖子</button>
+  </view>
+
+  <view class="loading" wx:if="{{loading || !initialLoad}}">
+    <text>加载中...</text>
+  </view>
+</view>

@@ -20,8 +20,7 @@ Component({
     },
     goToPublish() {
     const app = getApp();
-    const userInfo = app.globalData.userInfo || {};
-    if (!userInfo.openid) {
+    if (!app.globalData.isLoggedIn) {
       // 游客模式，跳转到个人中心引导登录
       wx.switchTab({ url: '/pages/profile/index' });
       return;

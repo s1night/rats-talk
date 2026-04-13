@@ -19,37 +19,33 @@
     </view>
   </view>
 
-  <!-- 登录后显示帖子列表 -->
+  <!-- 登录后显示入口 -->
   <view class="section" wx:else>
-    <view class="post-list">
-      <block wx:for="{{posts}}" wx:key="_id">
-        <post-card 
-          post="{{item}}" 
-          showAvatar="{{true}}" 
-          showIdentity="{{true}}" 
-          showStatus="{{true}}" 
-          showViewCount="{{true}}"
-          contentPrefix=""
-          catch:tap="goToPostDetail" 
-        />
-      </block>
-    </view>
-
-    <view class="loading-more" wx:if="{{loadingMore}}">
-      <text>加载中...</text>
-    </view>
-
-    <view class="no-more" wx:if="{{!hasMore && posts.length > 0 && !loading && !loadingMore}}">
-      <text>没有更多了</text>
-    </view>
-
-    <view class="empty-state" wx:if="{{posts.length === 0 && !loading && initialLoad}}">
-      <text class="empty-text">还没有发布过帖子，点击发布按钮，分享你的经历～</text>
-      <button class="publish-btn" bindtap="goToPublish">发布帖子</button>
-    </view>
-
-    <view class="loading" wx:if="{{loading || !initialLoad}}">
-      <text>加载中...</text>
+    <view class="menu-card">
+      <view class="menu-item" bindtap="goToMyPosts">
+        <text class="menu-title">我的帖子</text>
+        <image class="menu-arrow" src="/images/icons/arrow_right.png" mode="aspectFit" />
+      </view>
+      <view class="menu-item menu-divider" bindtap="goToHelpCenter">
+        <text class="menu-title">帮助中心</text>
+        <image class="menu-arrow" src="/images/icons/arrow_right.png" mode="aspectFit" />
+      </view>
+      <view class="menu-item menu-divider" bindtap="goToUserAgreement">
+        <text class="menu-title">用户协议</text>
+        <image class="menu-arrow" src="/images/icons/arrow_right.png" mode="aspectFit" />
+      </view>
+      <view class="menu-item menu-divider" bindtap="goToPrivacyPolicy">
+        <text class="menu-title">隐私政策</text>
+        <image class="menu-arrow" src="/images/icons/arrow_right.png" mode="aspectFit" />
+      </view>
+      <view class="menu-item menu-divider" bindtap="goToAboutUs">
+        <text class="menu-title">关于我们</text>
+        <image class="menu-arrow" src="/images/icons/arrow_right.png" mode="aspectFit" />
+      </view>
+      <view class="menu-item menu-divider" bindtap="logout">
+        <text class="menu-title menu-danger">退出登录</text>
+        <image class="menu-arrow" src="/images/icons/arrow_right.png" mode="aspectFit" />
+      </view>
     </view>
   </view>
 </view>

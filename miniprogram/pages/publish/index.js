@@ -15,8 +15,7 @@ Page({
 
   onLoad: function (options) {
     const app = getApp();
-    const userInfo = app.globalData.userInfo || {};
-    if (!userInfo.openid) {
+    if (!app.globalData.isLoggedIn) {
       wx.showToast({ title: '需要登录才能发布', icon: 'none' });
       setTimeout(() => {
         wx.switchTab({ url: '/pages/profile/index' });
@@ -110,7 +109,7 @@ Page({
       return;
     }
 
-    if (!app.globalData.userInfo) {
+    if (!app.globalData.isLoggedIn) {
       wx.showToast({ title: '请先登录', icon: 'none' });
       return;
     }
@@ -215,7 +214,7 @@ Page({
         },
         success: function (res) {
           if (res.result.success) {
-            wx.showToast({ title: '发布成功，等待审核', icon: 'success' });
+            wx.showToast({ title: '发布成功', icon: 'success' });
             that.setData({
               identity: -1,
               clubName: '',
@@ -223,7 +222,7 @@ Page({
               imgs: []
             });
             setTimeout(() => {
-              wx.reLaunch({ url: '/pages/profile/index' });
+              wx.reLaunch({ url: '/pages/index/index' });
             }, 1500);
           } else {
             wx.showToast({ title: res.result.message, icon: 'none' });

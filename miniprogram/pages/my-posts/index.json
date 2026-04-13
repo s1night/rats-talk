@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "post-card": "/components/post-card/post-card"
+  },
+  "navigationBarTitleText": "我的帖子",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark"
+}

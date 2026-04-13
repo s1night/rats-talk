@@ -53,12 +53,11 @@ Page({
         this.saveUserInfo(openid, nickName, avatarFileId, (success) => {
           if (success) {
             // 保存用户信息到本地
-            const userInfo = {
+            app.completeLogin({
               openid: openid,
               nickName: nickName,
               avatarUrl: avatarFileId
-            };
-            app.saveUserInfoToStorage(userInfo);
+            });
 
             wx.showToast({ title: '登录成功', icon: 'success' });
             setTimeout(() => {

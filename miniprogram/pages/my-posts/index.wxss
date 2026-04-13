@@ -1,0 +1,49 @@
+.container {
+  padding-bottom: 24rpx;
+}
+
+.post-list {
+  margin-bottom: 24rpx;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 160rpx 0;
+  color: #999999;
+  font-size: 32rpx;
+  line-height: 48rpx;
+}
+
+.publish-btn {
+  margin-top: 48rpx;
+  width: 240rpx;
+  height: 88rpx;
+  background-color: #000000;
+  color: #ffffff;
+  border-radius: 44rpx;
+  font-size: 32rpx;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading {
+  text-align: center;
+  padding: 48rpx 0;
+  color: #666666;
+  font-size: 28rpx;
+}
+
+.loading-more {
+  text-align: center;
+  padding: 32rpx 0;
+  color: #999999;
+  font-size: 26rpx;
+}
+
+.no-more {
+  text-align: center;
+  color: #999999;
+  font-size: 26rpx;
+}
