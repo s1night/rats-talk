@@ -1,7 +1,10 @@
 Page({
   data: {
     userInfo: {},
-    isLoggedIn: false
+    isLoggedIn: false,
+    isAuthing: false,
+    myPostCount: 0,
+    myUsefulCount: 0
   },
 
   onLoad: function () {
@@ -23,16 +26,50 @@ Page({
       userInfo: userInfo,
       isLoggedIn: !!app.globalData.isLoggedIn
     });
+    if (app.globalData.isLoggedIn) {
+      this.loadMyStats();
+    } else {
+      this.setData({
+        myPostCount: 0,
+        myUsefulCount: 0
+      });
+    }
+  },
+
+  loadMyStats: function () {
+    wx.cloud.callFunction({
+      name: 'getMyPosts',
+      data: {
+        page: 1,
+        pageSize: 1
+      },
+      success: (res) => {
+        if (!res.result || !res.result.success || !res.result.data) {
+          return;
+        }
+        this.setData({
+          myPostCount: Number(res.result.data.total || 0),
+          myUsefulCount: Number(res.result.data.totalUsefulCount || 0)
+        });
+      }
+    });
   },
 
   goToAuth: function () {
     const app = getApp();
+    if (this.data.isAuthing) {
+      return;
+    }
     if (app.globalData.isLoggedIn) {
       wx.showToast({ title: '已登录', icon: 'none', duration: 500 });
       return;
     }
     if (app.hasCachedUserProfile()) {
+      this.setData({ isAuthing: true });
+      wx.showLoading({ title: '登录中...', mask: true });
       app.loginWithCachedProfile((success) => {
+        wx.hideLoading();
+        this.setData({ isAuthing: false });
         if (success) {
           this.syncUserInfo();
           wx.showToast({ title: '登录成功', icon: 'success', duration: 500 });

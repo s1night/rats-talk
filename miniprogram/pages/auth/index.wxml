@@ -17,7 +17,7 @@
   </view>
 
   <!-- 确认授权按钮 -->
-  <button class="confirm-btn" bindtap="onLogin">
-    确认授权并登录
+  <button class="confirm-btn" bindtap="onLogin" loading="{{isLoggingIn}}" disabled="{{isLoggingIn}}">
+    {{isLoggingIn ? '登录中...' : '确认授权并登录'}}
   </button>
 </view>

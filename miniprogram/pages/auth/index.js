@@ -2,7 +2,8 @@
 Page({
   data: {
     avatarUrl: '',
-    nickName: ''
+    nickName: '',
+    isLoggingIn: false
   },
 
   onLoad: function (options) {
@@ -22,6 +23,9 @@ Page({
   },
 
   onLogin: function () {
+    if (this.data.isLoggingIn) {
+      return;
+    }
     const { avatarUrl, nickName } = this.data;
     const app = getApp();
 
@@ -35,9 +39,14 @@ Page({
       return;
     }
 
+    this.setData({ isLoggingIn: true });
+    wx.showLoading({ title: '登录中...', mask: true });
+
     // 获取openid
     app.getOpenid((openid) => {
       if (!openid) {
+        wx.hideLoading();
+        this.setData({ isLoggingIn: false });
         wx.showToast({ title: '获取用户信息失败', icon: 'none' });
         return;
       }
@@ -45,12 +54,16 @@ Page({
       // 上传头像到云存储
       this.uploadAvatar(avatarUrl, (avatarFileId) => {
         if (!avatarFileId) {
+          wx.hideLoading();
+          this.setData({ isLoggingIn: false });
           wx.showToast({ title: '头像上传失败', icon: 'none' });
           return;
         }
 
         // 保存用户信息到数据库
         this.saveUserInfo(openid, nickName, avatarFileId, (success) => {
+          wx.hideLoading();
+          this.setData({ isLoggingIn: false });
           if (success) {
             // 保存用户信息到本地
             app.completeLogin({

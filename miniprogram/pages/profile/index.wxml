@@ -15,12 +15,26 @@
   <view class="section" wx:if="{{!isLoggedIn}}">
     <view class="guide-state">
       <text class="guide-text">登录后即可查看您发布的所有帖子，并与大家互动交流</text>
-      <button class="login-btn" bindtap="goToAuth">微信授权登录</button>
+      <button class="login-btn" bindtap="goToAuth" loading="{{isAuthing}}" disabled="{{isAuthing}}">
+        {{isAuthing ? '登录中...' : '微信授权登录'}}
+      </button>
     </view>
   </view>
 
   <!-- 登录后显示入口 -->
   <view class="section" wx:else>
+    <view class="stats-card">
+      <view class="stats-item">
+        <text class="stats-value">{{myPostCount}}</text>
+        <text class="stats-label">帖子数量</text>
+      </view>
+      <view class="stats-divider"></view>
+      <view class="stats-item">
+        <text class="stats-value">{{myUsefulCount}}</text>
+        <text class="stats-label">获赞数量</text>
+      </view>
+    </view>
+
     <view class="menu-card">
       <view class="menu-item" bindtap="goToMyPosts">
         <text class="menu-title">我的帖子</text>
@@ -42,7 +56,10 @@
         <text class="menu-title">关于我们</text>
         <image class="menu-arrow" src="/images/icons/arrow_right.png" mode="aspectFit" />
       </view>
-      <view class="menu-item menu-divider" bindtap="logout">
+    </view>
+
+    <view class="logout-card">
+      <view class="menu-item" bindtap="logout">
         <text class="menu-title menu-danger">退出登录</text>
         <image class="menu-arrow" src="/images/icons/arrow_right.png" mode="aspectFit" />
       </view>

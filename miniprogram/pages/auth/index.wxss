@@ -84,3 +84,7 @@
   align-items: center;
   justify-content: center;
 }
+
+.confirm-btn[disabled] {
+  opacity: 0.75;
+}

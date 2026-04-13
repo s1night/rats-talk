@@ -48,11 +48,23 @@ exports.main = async (event, context) => {
       .where({ _openid: openid })
       .count();
 
+    // 统计总获赞数（汇总 usefulCount）
+    const usefulAggregateResult = await db.collection('posts')
+      .aggregate()
+      .match({ _openid: openid })
+      .group({
+        _id: null,
+        totalUsefulCount: db.command.aggregate.sum('$usefulCount')
+      })
+      .end();
+    const totalUsefulCount = usefulAggregateResult.list[0] ? Number(usefulAggregateResult.list[0].totalUsefulCount || 0) : 0;
+
     return {
       success: true,
       data: {
         posts: postsWithTempUrls,
         total: countResult.total,
+        totalUsefulCount: totalUsefulCount,
         page: page,
         pageSize: pageSize
       }
