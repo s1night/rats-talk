@@ -1,0 +1,15 @@
+{
+  "name": "interactPost",
+  "version": "1.0.0",
+  "description": "帖子有用/没用互动",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}

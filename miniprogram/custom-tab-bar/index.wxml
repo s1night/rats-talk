@@ -1,0 +1,13 @@
+<view class="tab-bar">
+  <view class="tab-item {{selected === 0 ? 'active' : ''}}" data-path="/pages/index/index" data-index="0" bindtap="switchTab">
+    <image class="tab-icon" src="{{selected === 0 ? '/images/icons/home_active.png' : '/images/icons/home.png'}}"></image>
+    <text class="tab-text" style="color: {{selected === 0 ? selectedColor : color}}">首页</text>
+  </view>
+  <view class="publish-btn" bindtap="goToPublish">
+    <image class="publish-icon" src="/images/icons/add.png"></image>
+  </view>
+  <view class="tab-item {{selected === 1 ? 'active' : ''}}" data-path="/pages/profile/index" data-index="1" bindtap="switchTab">
+    <image class="tab-icon" src="{{selected === 1 ? '/images/icons/user_active.png' : '/images/icons/user.png'}}"></image>
+    <text class="tab-text" style="color: {{selected === 1 ? selectedColor : color}}">我的</text>
+  </view>
+</view>

@@ -1,0 +1,68 @@
+<!--pages/post/index.wxml-->
+<view class="container">
+  <!-- 帖子详情 -->
+  <view class="post-detail">
+    <!-- 用户信息 -->
+    <view class="post-header">
+      <image class="avatar" src="{{post.avatarUrl}}" mode="aspectFill" />
+      <view class="header-info">
+        <text class="nickname">{{post.nickName}}</text>
+        <text class="identity-tag {{post.identity === 0 ? 'identity-boss' : 'identity-employee'}}">{{ post.identity === 0 ? '👑' : '🐭'}} {{identityConfig[post.identity]}}</text>
+      </view>
+      <view class="more-btn" wx:if="{{isOwner && source === 'profile'}}" bindtap="showMoreMenu">
+        <image src="../../images/icons/more.png" />
+      </view>
+    </view>
+
+    <!-- 俱乐部名称 -->
+    <view class="club-name-container">
+      <text class="club-name">{{post.clubName}}</text>
+    </view>
+
+    <!-- 内容 -->
+    <view class="post-content">
+      <text class="content">{{post.content}}</text>
+    </view>
+
+    <!-- 图片轮播 -->
+    <view class="image-swiper" wx:if="{{post.imgs && post.imgs.length > 0}}">
+      <swiper class="swiper" indicator-dots="{{false}}" bindchange="onSwiperChange">
+        <block wx:for="{{post.imgs}}" wx:key="index">
+          <swiper-item>
+            <image class="swiper-image" src="{{item}}" mode="aspectFit" bindtap="previewImage" data-index="{{index}}" />
+          </swiper-item>
+        </block>
+      </swiper>
+      <view class="swiper-indicator">
+        <text class="indicator-text">{{currentSwiperIndex + 1}}/{{post.imgs.length}}</text>
+      </view>
+    </view>
+
+    <!-- 底部信息 -->
+    <view class="post-footer">
+      <text class="create-time">{{post.createTime}}</text>
+      <!-- 暂时注释掉浏览量的展示，以后可能还要用 -->
+      <!--
+      <view class="view-wrapper">
+        <image class="view-icon" src="/images/icons/eye.png"></image>
+        <text class="view-count">{{formattedViewCount}}</text>
+      </view>
+      -->
+    </view>
+
+    <!-- 审核不通过原因 -->
+    <view class="reject-reason" wx:if="{{isOwner && post.status === 2 && post.rejectReason}}">
+      <text class="reject-label">审核不通过原因：</text>
+      <text class="reject-content">{{post.rejectReason}}</text>
+    </view>
+  </view>
+
+  <!-- 更多操作弹窗 -->
+  <view class="more-menu" wx:if="{{showMoreMenu}}">
+    <view class="menu-content">
+      <text class="menu-item" bindtap="editPost">编辑</text>
+      <text class="menu-item delete" bindtap="deletePost">删除</text>
+      <text class="menu-item cancel" bindtap="cancelMoreMenu">取消</text>
+    </view>
+  </view>
+</view>

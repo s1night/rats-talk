@@ -1,0 +1,203 @@
+/* app.wxss */
+.container {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  padding-bottom: 100rpx;
+}
+
+/* 公共样式 */
+.text-primary {
+  color: #000000;
+}
+
+.text-secondary {
+  color: #666666;
+}
+
+.text-tertiary {
+  color: #999999;
+}
+
+.text-success {
+  color: #00c851;
+}
+
+.text-error {
+  color: #ff3b30;
+}
+
+/* 按钮样式 */
+.btn-primary {
+  background-color: #000000;
+  color: #ffffff;
+  border-radius: 24rpx;
+  font-size: 32rpx;
+  font-weight: 600;
+  height: 88rpx;
+  line-height: 88rpx;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:active {
+  background-color: #333333;
+  transform: scale(0.98);
+}
+
+.btn-secondary {
+  background-color: #ffffff;
+  color: #000000;
+  border: 1rpx solid #e0e0e0;
+  border-radius: 24rpx;
+  font-size: 32rpx;
+  font-weight: 500;
+  height: 88rpx;
+  line-height: 88rpx;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:active {
+  background-color: #f5f5f5;
+  transform: scale(0.98);
+}
+
+/* 输入框样式 */
+.input {
+  width: 100%;
+  height: 88rpx;
+  border: 1rpx solid #e0e0e0;
+  border-radius: 24rpx;
+  padding: 0 24rpx;
+  font-size: 32rpx;
+  background-color: #ffffff;
+  transition: all 0.3s ease;
+}
+
+.input:focus {
+  border-color: #000000;
+  box-shadow: 0 0 0 2rpx rgba(0, 0, 0, 0.1);
+}
+
+/* 卡片样式 */
+.card {
+  background-color: #ffffff;
+  border-radius: 24rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+  padding: 24rpx;
+  margin-bottom: 16rpx;
+  transition: all 0.3s ease;
+}
+
+.card:active {
+  transform: translateY(2rpx);
+  box-shadow: 0 1rpx 4rpx rgba(0, 0, 0, 0.05);
+}
+
+/* 加载动画 */
+.loading {
+  text-align: center;
+  padding: 48rpx 0;
+  color: #666666;
+  font-size: 28rpx;
+}
+
+/* 空状态 */
+.empty-state {
+  text-align: center;
+  padding: 120rpx 0;
+  color: #999999;
+  font-size: 32rpx;
+}
+
+/* 悬浮按钮 */
+.fab {
+  position: fixed;
+  bottom: 48rpx;
+  right: 48rpx;
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 50%;
+  background-color: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.fab:active {
+  transform: scale(0.95);
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+
+/* 通用动画 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(24rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.4s ease-out;
+}
+
+/* 通用间距 */
+.mt-16 {
+  margin-top: 16rpx;
+}
+
+.mt-24 {
+  margin-top: 24rpx;
+}
+
+.mt-32 {
+  margin-top: 32rpx;
+}
+
+.mb-16 {
+  margin-bottom: 16rpx;
+}
+
+.mb-24 {
+  margin-bottom: 24rpx;
+}
+
+.mb-32 {
+  margin-bottom: 32rpx;
+}
+
+/* 通用布局 */
+.flex {
+  display: flex;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-start {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.flex-end {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}

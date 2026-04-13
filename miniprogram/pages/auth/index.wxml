@@ -1,0 +1,23 @@
+<view class="container">
+  <!-- 顶部标题 -->
+  <view class="title">完善个人信息</view>
+  <view class="tip">用于身份展示，不获取隐私信息</view>
+
+  <!-- 头像选择区域（把 button 美化成卡片） -->
+  <view class="avatar-box">
+    <button class="avatar-btn" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">
+      <image class="avatar" src="{{avatarUrl || '/images/avatar.jpeg'}}" mode="aspectFill"></image>
+    </button>
+    <text class="avatar-text">点击选择头像</text>
+  </view>
+
+  <!-- 昵称输入 -->
+  <view class="input-box">
+    <input class="input" type="nickname" placeholder="请输入昵称" value="{{nickName}}" bindinput="onNickNameInput" />
+  </view>
+
+  <!-- 确认授权按钮 -->
+  <button class="confirm-btn" bindtap="onLogin">
+    确认授权并登录
+  </button>
+</view>

@@ -1,0 +1,48 @@
+<view class="container">
+  <view class="search-box">
+    <input 
+      class="search-input" 
+      placeholder="请输入俱乐部名称" 
+      bindinput="onSearchInput" 
+      bindconfirm="onSearch" 
+      value="{{searchValue}}"
+    />
+    <view class="clear-btn" wx:if="{{searchValue}}" bindtap="clearSearch">
+      <text>×</text>
+    </view>
+  </view>
+
+  <view class="post-list">
+    <block wx:for="{{posts}}" wx:key="_id">
+      <post-card 
+        post="{{item}}" 
+        showAvatar="{{true}}" 
+        showIdentity="{{true}}" 
+        showStatus="{{false}}" 
+        showViewCount="{{true}}"
+        catch:tap="goToPostDetail" 
+      />
+    </block>
+  </view>
+
+  <view class="loading-more" wx:if="{{loadingMore}}">
+    <text>加载中...</text>
+  </view>
+
+  <view class="no-more" wx:if="{{!hasMore && posts.length > 0 && !loading && !loadingMore}}">
+    <text>没有更多了</text>
+  </view>
+
+  <view class="empty-state" wx:if="{{posts.length === 0 && !loading && isSearching && initialLoad}}">
+    <text class="empty-text">未找到相关俱乐部</text>
+  </view>
+
+  <view class="empty-state" wx:if="{{posts.length === 0 && !loading && !isSearching && initialLoad}}">
+    <text class="empty-text">还没有帖子，快来做第一个避坑的鼠鼠～</text>
+    <button class="publish-btn" bindtap="goToPublish">发布帖子</button>
+  </view>
+
+  <view class="loading" wx:if="{{loading || !initialLoad}}">
+    <text>加载中...</text>
+  </view>
+</view>

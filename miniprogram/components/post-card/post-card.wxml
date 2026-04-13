@@ -1,0 +1,79 @@
+<view class="post-card" catchtap="onTap">
+  <!-- 状态标签 - 固定在右上角 -->
+  <view class="status-tag" wx:if="{{showStatus && post.status !== 1}}">
+    <span class="status {{post.status === 0 ? 'status-pending' : 'status-rejected'}}">
+      {{post.status === 0 ? '待审核' : '已拒绝'}}
+    </span>
+  </view>
+
+  <!-- 头像和用户信息 -->
+  <view class="post-header" wx:if="{{showAvatar}}">
+    <image class="avatar" src="{{post.avatarUrl}}" mode="aspectFill" lazy-load="{{true}}" />
+    <view class="header-info">
+      <text class="nickname">{{post.nickName}}</text>
+      <text class="identity-tag {{post.identity === 0 ? 'identity-boss' : 'identity-employee'}}" wx:if="{{showIdentity}}">{{ post.identity === 0 ? '👑' : '🐭'}} {{identityConfig[post.identity]}}</text>
+    </view>
+    <image class="more-btn" src="../../images/icons/more.png" bindtap="onMoreTap" wx:if="{{showMoreButton}}" />
+  </view>
+
+  <!-- 个人中心：只显示俱乐部名称 -->
+  <view class="post-header-simple" wx:if="{{!showAvatar}}">
+    <text class="club-name">{{post.clubName}}</text>
+  </view>
+
+  <!-- 俱乐部名称（标题部分） -->
+  <view class="club-name-container" wx:if="{{showAvatar}}">
+    <text class="club-name">{{post.clubName}}</text>
+  </view>
+
+  <!-- 内容 -->
+  <view class="post-content">
+    <text class="content {{showFullContent ? '' : 'content-ellipsis'}}">{{contentPrefix}}{{post.content}}</text>
+    
+    <!-- 图片展示：最多三张，一排显示 -->
+    <view class="image-grid" wx:if="{{post.imgs && post.imgs.length > 0}}">
+      <image 
+        class="grid-image" 
+        src="{{post.imgs[0]}}" 
+        mode="aspectFill" 
+        lazy-load="{{true}}"
+        wx:if="{{post.imgs.length >= 1}}" 
+      />
+      <image 
+        class="grid-image" 
+        src="{{post.imgs[1]}}" 
+        mode="aspectFill" 
+        lazy-load="{{true}}"
+        wx:if="{{post.imgs.length >= 2}}" 
+      />
+      <image 
+        class="grid-image" 
+        src="{{post.imgs[2]}}" 
+        mode="aspectFill" 
+        lazy-load="{{true}}"
+        wx:if="{{post.imgs.length >= 3}}" 
+      />
+    </view>
+  </view>
+
+  <!-- 底部信息 -->
+  <view class="post-footer">
+    <text class="create-time">{{post.createTime}}</text>
+    <view class="interaction">
+      <view class="interaction-item {{post.userInteractionType === 'useful' ? 'interaction-item-active' : ''}}" catchtap="onUsefulTap">
+        <image
+          class="interaction-icon {{post.userInteractionType === 'useful' ? 'interaction-icon-active' : ''}}"
+          src="{{post.userInteractionType === 'useful' ? '/images/icons/useful_active.png' : '/images/icons/useful.png'}}"
+        ></image>
+        <text class="interaction-count">{{post.usefulCount || 0}}</text>
+      </view>
+      <view class="interaction-item {{post.userInteractionType === 'useless' ? 'interaction-item-active' : ''}}" catchtap="onUselessTap">
+        <image
+          class="interaction-icon {{post.userInteractionType === 'useless' ? 'interaction-icon-active' : ''}}"
+          src="{{post.userInteractionType === 'useless' ? '/images/icons/useless_active.png' : '/images/icons/useless.png'}}"
+        ></image>
+        <text class="interaction-count">{{post.uselessCount || 0}}</text>
+      </view>
+    </view>
+  </view>
+</view>

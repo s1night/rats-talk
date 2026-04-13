@@ -1,0 +1,20 @@
+{
+  "usingComponents": {
+    "post-card": "../../components/post-card/post-card"
+  },
+  "navigationBarTitleText": "帖子详情",
+  "navigationBarBackgroundColor": "#ffffff",
+  "navigationBarTextStyle": "black",
+  "enablePullDownRefresh": false,
+  "onReachBottomDistance": 50,
+  "navigationStyle": "default",
+  "backgroundTextStyle": "dark",
+  "backgroundColor": "#f5f5f5",
+  "navigationBarRightItems": [
+    {
+      "iconPath": "../../images/icons/more.png",
+      "text": "",
+      "bindtap": "showMoreMenu"
+    }
+  ]
+}

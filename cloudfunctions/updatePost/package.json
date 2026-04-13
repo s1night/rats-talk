@@ -1,0 +1,14 @@
+{
+  "name": "updatePost",
+  "version": "1.0.0",
+  "description": "更新帖子",
+  "main": "index.js",
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  },
+  "config": {
+    "timeout": 10000
+  }
+}

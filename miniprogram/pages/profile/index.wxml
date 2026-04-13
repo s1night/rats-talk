@@ -1,0 +1,55 @@
+<view class="container">
+  <!-- 游客模式 -->
+  <view class="user-info" wx:if="{{!isLoggedIn}}">
+    <image class="avatar" src="../../images/avatar.jpeg" mode="aspectFill" />
+    <text class="nickname">游客</text>
+  </view>
+
+  <!-- 登录模式 -->
+  <view class="user-info" wx:else>
+    <image class="avatar" src="{{userInfo.avatarUrl || '../../images/avatar.jpeg'}}" mode="aspectFill" />
+    <text class="nickname">{{userInfo.nickName || '用户'}}</text>
+  </view>
+
+  <!-- 游客模式引导 -->
+  <view class="section" wx:if="{{!isLoggedIn}}">
+    <view class="guide-state">
+      <text class="guide-text">登录后即可查看您发布的所有帖子，并与大家互动交流</text>
+      <button class="login-btn" bindtap="goToAuth">微信授权登录</button>
+    </view>
+  </view>
+
+  <!-- 登录后显示帖子列表 -->
+  <view class="section" wx:else>
+    <view class="post-list">
+      <block wx:for="{{posts}}" wx:key="_id">
+        <post-card 
+          post="{{item}}" 
+          showAvatar="{{true}}" 
+          showIdentity="{{true}}" 
+          showStatus="{{true}}" 
+          showViewCount="{{true}}"
+          contentPrefix=""
+          catch:tap="goToPostDetail" 
+        />
+      </block>
+    </view>
+
+    <view class="loading-more" wx:if="{{loadingMore}}">
+      <text>加载中...</text>
+    </view>
+
+    <view class="no-more" wx:if="{{!hasMore && posts.length > 0 && !loading && !loadingMore}}">
+      <text>没有更多了</text>
+    </view>
+
+    <view class="empty-state" wx:if="{{posts.length === 0 && !loading && initialLoad}}">
+      <text class="empty-text">还没有发布过帖子，点击发布按钮，分享你的经历～</text>
+      <button class="publish-btn" bindtap="goToPublish">发布帖子</button>
+    </view>
+
+    <view class="loading" wx:if="{{loading || !initialLoad}}">
+      <text>加载中...</text>
+    </view>
+  </view>
+</view>

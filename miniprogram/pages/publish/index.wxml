@@ -1,0 +1,65 @@
+<!--pages/publish/index.wxml-->
+<view class="container">
+  <!-- 身份选择 -->
+  <view class="form-section form-section-inline">
+    <view class="field-label-inline">身份</view>
+    <radio-group class="identity-select" bindchange="onIdentityChange">
+      <label class="radio-item">
+        <radio value="1" checked="{{identity === 1}}" color="#000000" />
+        <text class="radio-label">{{identityConfig[1]}}</text>
+      </label>
+      <label class="radio-item">
+        <radio value="0" checked="{{identity === 0}}" color="#000000" />
+        <text class="radio-label">{{identityConfig[0]}}</text>
+      </label>
+    </radio-group>
+  </view>
+
+  <!-- 俱乐部名称和评价内容 -->
+  <view class="form-section">
+    <view class="field-label">俱乐部名称</view>
+    <view class="input-container">
+      <input class="input" placeholder="" bindinput="onClubNameInput" value="{{clubName}}" />
+    </view>
+    
+    <view class="field-label-row" style="margin-top: 24rpx;">
+      <view class="field-label">内容</view>
+      <view class="char-limit">限制10-500字</view>
+    </view>
+    <textarea class="textarea" placeholder="" bindinput="onContentInput" value="{{content}}" />
+    <view class="content-tip">
+      <text>客观描述经历，禁止辱骂、造谣，需配合图片证据</text>
+    </view>
+  </view>
+
+  <!-- 图片上传 -->
+  <view class="form-section">
+    <view class="field-label">图片上传</view>
+    <view class="upload-area">
+      <view class="upload-list">
+        <block wx:for="{{imgs}}" wx:key="index">
+          <view class="upload-item">
+            <image src="{{item}}" mode="aspectFill" class="upload-image" />
+            <view class="delete-btn" bindtap="deleteImage" data-index="{{index}}">×</view>
+          </view>
+        </block>
+        <view class="upload-btn" wx:if="{{imgs.length < 5}}" bindtap="chooseImage">
+          <text>+</text>
+        </view>
+      </view>
+      <view class="upload-tip">
+        <text>至少上传1张证据图（聊天记录、结算单等），禁止隐私、违规图片</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部发布按钮 -->
+  <view class="bottom-publish">
+    <button class="publish-btn" bindtap="submit" loading="{{loading}}">发布</button>
+  </view>
+
+  <!-- 加载提示 -->
+  <view class="loading" wx:if="{{loading}}">
+    <text>提交中...</text>
+  </view>
+</view>
