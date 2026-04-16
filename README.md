@@ -1,6 +1,6 @@
 # 鼠鼠说（rats-talk）
 
-基于微信小程序云开发的校园交流社区项目，支持发帖、浏览、互动、个人中心与我的发布管理。
+基于微信小程序云开发的交流社区项目，支持发帖、浏览、互动、个人中心与我的发布管理。
 
 ## 项目概览
 
@@ -57,6 +57,3 @@ rats-talk/
 └── README.md
 ```
 
-## 参考文档
-
-- [微信小程序云开发文档](https://developers.weixin.qq.com/miniprogram/dev/wxcloud/basis/getting-started.html)
